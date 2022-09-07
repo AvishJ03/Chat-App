@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +13,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
 
   const toastOptions = {
     position: "bottom-center",
@@ -22,20 +23,32 @@ const Register = () => {
     theme: "dark",
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate("/");
+    }
+  }, []);
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (handleValidation()) {
-      const { username, email, password, confirmPassword } = values;
+      const { username, email, password } = values;
       const { data } = await axios.post(registerRoute, {
         username,
         email,
         password,
       });
+      if (data.status === false) {
+        toast.error(data.message, toastOptions);
+      } else {
+        localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+        navigate("/");
+      }
     }
   }
 
   function handleValidation(e) {
-    const { username, email, password, confirmPassword } = values;
+    const { username, password, confirmPassword } = values;
     if (password !== confirmPassword) {
       toast.error("Passwords not macthing!", toastOptions);
       return false;
