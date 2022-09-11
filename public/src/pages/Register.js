@@ -42,7 +42,7 @@ const Register = () => {
         toast.error(data.message, toastOptions);
       } else {
         localStorage.setItem("chat-app-user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/setAvatar");
       }
     }
   }

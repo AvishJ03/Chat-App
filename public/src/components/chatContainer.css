@@ -1,0 +1,142 @@
+.chatContainer {
+  padding-top: 1rem;
+}
+
+.chatContainer .chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.chatContainer .user-details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chatContainer .avatar img {
+  height: 3rem;
+}
+
+.chatContainer .username h3 {
+  color: white;
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #9a86f3;
+  border: none;
+  cursor: pointer;
+}
+
+.logout svg {
+  font-size: 1.3rem;
+  color: #ebe7ff;
+}
+
+.chat-input {
+  display: grid;
+  grid-template-columns: 5% 95%;
+  align-items: center;
+  background-color: #080420;
+  padding: 0 2rem;
+  padding-bottom: 0.3rem;
+}
+
+.chat-input .button-container {
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 1rem;
+}
+
+.emoji {
+  position: relative;
+}
+
+.emoji svg {
+  font-size: 1.5rem;
+  color: #ffff00c8;
+  cursor: pointer;
+}
+
+.emoji .emoji-picker-react {
+  position: absolute;
+  top: -350px;
+  background-color: #080420;
+  box-shadow: 0 5px 10px #9a86f3;
+  border-color: #9a86f3;
+}
+
+.emoji-picker-react .emoji-categories button {
+  filter: contrast(0);
+}
+
+.emoji-picker-react .emoji-search {
+  background-color: transparent;
+  border-color: #9a86f3;
+}
+
+.emoji-picker-react .emoji-group::before {
+  background-color: #080420 !important;
+}
+
+.emoji-scroll-wrapper::-webkit-scrollbar {
+  background-color: #080420;
+  width: 5px;
+}
+.emoji-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #9a86f3;
+  width: 5px;
+}
+
+.chat-input .input-container {
+  width: 100%;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background-color: #ffffff34;
+}
+
+.chat-input .input-container input {
+  width: 90%;
+  height: 60%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.chat-input .input-container input::selection {
+  background-color: #9a86f3;
+}
+
+.chat-input .input-container input:focus {
+  outline: none;
+}
+
+.chat-input .input-container button {
+  padding: 0.3rem 2rem;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9a86fc;
+  border: none;
+}
+
+.chat-input .input-container button svg {
+  font-size: 2rem;
+  color: white;
+}
+
+.messages {
+  height: 80%;
+}

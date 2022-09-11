@@ -27,7 +27,7 @@ const SetAvatar = () => {
     } else if (
       JSON.parse(localStorage.getItem("chat-app-user")).isAvatarImageSet
     ) {
-      // navigate("/");
+      navigate("/");
     }
   }, []);
   const setProfilePicture = async () => {
