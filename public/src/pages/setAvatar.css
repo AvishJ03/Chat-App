@@ -9,22 +9,20 @@
   width: 100vw;
 }
 
-.loader {
+.setAvatar .loader {
+  height: 75vh;
 }
 
-.title-container {
-}
-
-h1 {
+.setAvatar h1 {
   color: white;
 }
 
-.avatars {
+.setAvatar .avatars {
   display: flex;
   gap: 2rem;
 }
 
-.avatar {
+.setAvatar .avatar {
   border: 0.4rem solid transparent;
   padding: 0.4rem;
   border-radius: 5rem;
@@ -34,26 +32,26 @@ h1 {
   transition: 0.5s ease-in-out;
 }
 
-img {
+.setAvatar img {
   height: 6rem;
 }
 
-.selected {
+.setAvatar .selected {
   border: 0.4rem solid #4e0eff;
 }
 
-button {
-    background-color: #997af0;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0.4rem;
-    font-size: 1rem;
-    text-transform: uppercase;
-    transition: 0.5s ease-in-out;
-  }
-  button:hover {
-    background-color: #4e0eff;
-  }
+.setAvatar button {
+  background-color: #997af0;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: 0.5s ease-in-out;
+}
+.setAvatar button:hover {
+  background-color: #4e0eff;
+}

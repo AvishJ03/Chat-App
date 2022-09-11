@@ -9,20 +9,20 @@
   background-color: #131324;
 }
 
-.brand {
+.register .brand {
   display: flex;
   align-items: center;
   gap: 1rem;
   justify-content: center;
 }
-img {
+.register img {
   height: 5rem;
 }
-h1 {
+.register h1 {
   color: white;
   text-transform: uppercase;
 }
-form {
+.register form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -30,7 +30,7 @@ form {
   border-radius: 2rem;
   padding: 3rem 5rem;
 }
-input {
+.register input {
   background-color: transparent;
   padding: 1rem;
   border: 0.1rem solid #4e0eff;
@@ -39,11 +39,11 @@ input {
   width: 100%;
   font-size: 1rem;
 }
-input:focus {
+.register input:focus {
   border: 0.1rem solid #997af0;
   outline: none;
 }
-button {
+.register button {
   background-color: #997af0;
   color: white;
   padding: 1rem 2rem;
@@ -55,15 +55,15 @@ button {
   text-transform: uppercase;
   transition: 0.5s ease-in-out;
 }
-button:hover {
+.register button:hover {
   background-color: #4e0eff;
 }
 
-span {
+.register span {
   color: white;
   text-transform: uppercase;
 }
-a {
+.register a {
   color: #4e0eff;
   text-decoration: none;
   font-weight: bold;

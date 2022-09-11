@@ -21,8 +21,32 @@ const SetAvatar = () => {
     draggable: true,
     theme: "dark",
   };
+  useEffect(() => {
+    if (!localStorage.getItem("chat-app-user")) {
+      navigate("/login");
+    } else if (
+      JSON.parse(localStorage.getItem("chat-app-user")).isAvatarImageSet
+    ) {
+      // navigate("/");
+    }
+  }, []);
   const setProfilePicture = async () => {
-    
+    if (selected === undefined) {
+      toast.error("Please select an avatar", toastOptions);
+    } else {
+      const user = await JSON.parse(localStorage.getItem("chat-app-user"));
+      const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
+        image: avatars[selected],
+      });
+      if (data.isSet) {
+        user.isAvatarImageSet = true;
+        user.avatarImage = data.image;
+        localStorage.setItem("chat-app-user", JSON.stringify(user));
+        navigate("/");
+      } else {
+        toast.error("Error setting avatar.", toastOptions);
+      }
+    }
   };
   useEffect(() => {
     async function getImage() {
@@ -42,27 +66,35 @@ const SetAvatar = () => {
 
   return (
     <div className="setAvatar">
-      <div className="title-container">
-        <h1>Pick an avatar as your profile picture</h1>
-      </div>
-      <div className="avatars">
-        {avatars.map((avatar, index) => {
-          return (
-            <div
-              key={index}
-              className={`avatar ${selected === index ? "selected" : ""}`}
-            >
-              <img
-                src={`data:image/svg+xml;base64,${avatar}`}
-                alt="avatar"
-                onClick={() => setSelected(index)}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <button className="submit" onClick={setProfilePicture}>Set as Profile Picture</button>
-      <ToastContainer />
+      {isLoading ? (
+        <img src="/assets/loader.gif" alt="loader" className="loader" />
+      ) : (
+        <div className="setAvatar">
+          <div className="title-container">
+            <h1>Pick an avatar as your profile picture</h1>
+          </div>
+          <div className="avatars">
+            {avatars.map((avatar, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`avatar ${selected === index ? "selected" : ""}`}
+                >
+                  <img
+                    src={`data:image/svg+xml;base64,${avatar}`}
+                    alt="avatar"
+                    onClick={() => setSelected(index)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <button className="submit" onClick={setProfilePicture}>
+            Set as Profile Picture
+          </button>
+          <ToastContainer />
+        </div>
+      )}
     </div>
   );
 };
