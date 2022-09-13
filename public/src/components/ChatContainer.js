@@ -1,32 +1,59 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getMessageRoute, sendMessageRoute } from "../utils/APIRoutes";
 import "./chatContainer.css";
+import { v4 as uuidv4 } from "uuid";
 import ChatInput from "./ChatInput";
 import Logout from "./Logout";
-import Messages from "./Messages";
 
-const ChatContainer = ({ currentUser, currentChat }) => {
+const ChatContainer = ({ currentUser, currentChat, socket }) => {
+  const scrollRef = useRef();
   const [messages, setMessages] = useState([]);
+  const [arrival, setArrival] = useState(null);
   useEffect(() => {
     async function getMessages() {
-      const response = await axios.post(getMessageRoute, {
-        from: currentUser._id,
-        to: currentChat._id,
-      });
-      setMessages(response.data);
+      if (currentChat) {
+        const response = await axios.post(getMessageRoute, {
+          from: currentUser._id,
+          to: currentChat._id,
+        });
+        setMessages(response.data);
+      }
     }
     getMessages();
   }, [currentChat]);
   const handleSendMsg = async (msg) => {
-    console.log(currentUser);
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
     });
-    console.log(msg);
+    socket.current.emit("send-msg", {
+      to: currentChat._id,
+      from: currentUser._id,
+      message: msg,
+    });
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-received", (message) => {
+        setArrival({ fromSelf: false, message: message });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    arrival && setMessages((prev) => [...prev, arrival]);
+  }, [arrival]);
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <>
       {currentChat && (
@@ -49,9 +76,9 @@ const ChatContainer = ({ currentUser, currentChat }) => {
           <div className="chat-messages">
             {messages.map((msg) => {
               return (
-                <div>
+                <div ref={scrollRef} key={uuidv4()}>
                   <div
-                    classname={`message ${
+                    className={`message ${
                       msg.fromSelf ? "sended" : "received"
                     }`}
                   >

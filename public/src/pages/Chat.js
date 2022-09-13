@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
-import { allUsersRoute } from "../utils/APIRoutes";
+import { io } from "socket.io-client";
+import { allUsersRoute, host } from "../utils/APIRoutes";
 import "./chat.css";
 
 const Chat = () => {
+  const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [current, setCurrent] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
@@ -24,6 +26,14 @@ const Chat = () => {
     }
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (current) {
+      socket.current = io(host);
+      socket.current.emit("add-user", current._id);
+    }
+  }, [current]);
+
   useEffect(() => {
     async function getContacts() {
       const data = await axios.get(`${allUsersRoute}/${current._id}`);
@@ -32,7 +42,6 @@ const Chat = () => {
     if (current) {
       if (current.isAvatarImageSet) {
         getContacts();
-        console.log(current);
       } else {
         navigate("/setAvatar");
       }
@@ -54,7 +63,11 @@ const Chat = () => {
         {loaded && currentChat === undefined ? (
           <Welcome user={current} />
         ) : (
-          <ChatContainer currentUser={current} currentChat={currentChat} />
+          <ChatContainer
+            currentUser={current}
+            currentChat={currentChat}
+            socket={socket}
+          />
         )}
       </div>
     </div>

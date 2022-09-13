@@ -4,7 +4,6 @@ import "./welcome.css"
 const Welcome = ({ user }) => {
   return (
     <div className="welcome">
-      {console.log(user)}
       <img src="/assets/robot.gif" alt="robot" />
       <h1>
         Welcome, <span>{user && user.username}!</span>

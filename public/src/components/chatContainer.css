@@ -1,5 +1,9 @@
 .chatContainer {
   padding-top: 1rem;
+  display: grid;
+  grid-template-rows: 10% 80% 10%;
+  gap: 0.1rem;
+  overflow: hidden;
 }
 
 .chatContainer .chat-header {
@@ -137,8 +141,8 @@
   color: white;
 }
 
-.messages {
-  /* height: 80%; */
+.message {
+  height: 80%;
   display: flex;
   align-items: center;
 }
@@ -151,13 +155,18 @@
   overflow: auto;
 }
 
-.chat-messages .content {
+.message .content {
   max-width: 40%;
   overflow-wrap: break-word;
   padding: 1rem;
   font-size: 1.1rem;
   border-radius: 1rem;
   color: #d1d1d1;
+}
+@media screen and (min-width: 720px) and (max-width: 1080px) {
+  .message .content {
+    max-width: 70%;
+  }
 }
 
 .sended {
